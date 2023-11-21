@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { HelloWorldPanel } from './panels/HelloWorldPanel';
 
 
 export function activate(context: vscode.ExtensionContext) {
@@ -9,6 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// The command has been defined in the package.json file
 	let disposable = vscode.commands.registerCommand('vscode-dict.helloWorld', () => {
+		HelloWorldPanel.render(context.extensionUri);
 		vscode.window.showInformationMessage('Hello World from vscode-dict!');
 	});
 
