@@ -18,7 +18,7 @@ export async function run(): Promise<void> {
 	try {
 		return new Promise<void>((c, e) => {
 			// Run the mocha test
-			mocha.run(failures => {
+			mocha.run((failures: number) => {
 				if (failures > 0) {
 					e(new Error(`${failures} tests failed.`));
 				} else {
