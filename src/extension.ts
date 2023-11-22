@@ -11,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	let disposable = vscode.commands.registerCommand('vscode-dict.helloWorld', () => {
 		HelloWorldPanel.render(context.extensionUri);
-		vscode.window.showInformationMessage('Hello World from vscode-dict!');
+		//vscode.window.showInformationMessage('Hello World from vscode-dict!');
 	});
 
 	context.subscriptions.push(disposable);
