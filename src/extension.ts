@@ -1,20 +1,22 @@
-import * as vscode from 'vscode';
-import { HelloWorldPanel } from './panels/HelloWorldPanel';
+import { ExtensionContext, commands, window } from "vscode";
+import { HelloWorldPanel } from "./panels/HelloWorldPanel";
+import { DictionaryViewProvider } from "./providers/DictionaryViewProvider";
 
 
-export function activate(context: vscode.ExtensionContext) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "vscode-dict" is now active!');
-
-	// The command has been defined in the package.json file
-	let disposable = vscode.commands.registerCommand('vscode-dict.helloWorld', () => {
+export function activate(context: ExtensionContext) {
+	// register commands
+	let helloPanelDisposable = commands.registerCommand('vscode-dict.helloWorld', () => {
 		HelloWorldPanel.render(context.extensionUri);
-		//vscode.window.showInformationMessage('Hello World from vscode-dict!');
 	});
-
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(helloPanelDisposable);
+	
+	// register views
+	const dictProvider = new DictionaryViewProvider(context.extensionUri);
+	let dictViewDisposable = window.registerWebviewViewProvider(
+		DictionaryViewProvider.viewType,
+		dictProvider
+	);
+	context.subscriptions.push(dictViewDisposable);
 }
 
 export function deactivate() {}
