@@ -5,6 +5,7 @@ const vscode_1 = require("vscode");
 const getUri_1 = require("../utilities/getUri");
 const getNonce_1 = require("../utilities/getNonce");
 const weather = require("weather-js");
+const axios_1 = require("axios");
 class DictionaryViewProvider {
     constructor(_extensionUri) {
         this._extensionUri = _extensionUri;
@@ -39,20 +40,21 @@ class DictionaryViewProvider {
                     <title>Weather Checker</title>
                 </head>
                 <body>
-                    <h1>Weather Checker</h1>
+                    <h1>Search</h1>
                     <section id="search-container">
-                        <vscode-text-field id="location" placeholder="Location" value="Seattle, WA"></vscode-text-field>
-                        <vscode-dropdown id="unit">
+                        <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
+                        <!-- <vscode-dropdown id="unit">
                             <vscode-option value="F">Fahrenheit</vscode-option>
                             <vscode-option value="C">Celsius</vscode-option>
-                        </vscode-dropdown>
+                        </vscode-dropdown> -->
                     </section>
-                    <vscode-button id="check-weather-button">Check</vscode-button>
-                    <h2>Current Weather</h2>
+                    <vscode-button id="search-button">Search</vscode-button>
+                    <h2 id="word-tittle"></h2>
                     <section id="results-container">
                         <vscode-progress-ring id="loading" class="hidden"></vscode-progress-ring>
-                        <p id="icon"></p>
-                        <p id="summary"></p>
+                        <!-- <p id="icon"></p>
+                        <p id="summary"></p> -->
+                        <p id="explanation"></p>
                     </section>
                     <script type="module" nonce="${nonce}" src="${webviewUri}"></script>
                 </body>
@@ -64,6 +66,7 @@ class DictionaryViewProvider {
             const command = message.command;
             const location = message.location;
             const unit = message.unit;
+            const word = message.word;
             switch (command) {
                 case "weather":
                     weather.find({ search: location, degreeType: unit }, (err, result) => {
@@ -81,6 +84,18 @@ class DictionaryViewProvider {
                             command: "weather",
                             payload: JSON.stringify(weatherForecast),
                         });
+                    });
+                    break;
+                case "search":
+                    axios_1.default.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+                        .then(function (response) {
+                        webviewView.webview.postMessage({
+                            command: "search",
+                            payload: JSON.stringify(response.data[0]),
+                        });
+                    })
+                        .catch(function (error) {
+                        console.log("axios get error");
                     });
                     break;
             }

@@ -9,7 +9,7 @@ h1 {
     justify-content: center;
   }
   
-  #location {
+  #word {
     width: 100%;
     margin-top: 0.5rem;
   }
@@ -20,7 +20,7 @@ h1 {
     margin-top: 0.5rem;
   }
   
-  #check-weather-button {
+  #search-button {
     margin-top: 0.5rem;
   }
   

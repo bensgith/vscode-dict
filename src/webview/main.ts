@@ -53,8 +53,14 @@ function main() {
   const howdyButton = document.getElementById("howdy") as Button;
   howdyButton?.addEventListener("click", handleHowdyClick);
 
-  const checkWeatherButton = document.getElementById("check-weather-button") as Button;
-  checkWeatherButton.addEventListener("click", checkWeather);
+  const searchButton = document.getElementById("search-button") as Button;
+  searchButton.addEventListener("click", searchWord);
+  searchButton.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+      console.log("enter key");
+      searchWord;
+    }
+  });
 
   setVSCodeMessageListener();
 }
@@ -99,15 +105,24 @@ function handleHowdyClick() {
 }
 
 function checkWeather() {
-  const location = document.getElementById("location") as TextField;
-  const unit = document.getElementById("unit") as Dropdown;
+  const word = document.getElementById("word") as TextField;
 
   // Passes a message back to the extension context with the location that
   // should be searched for and the degree unit (F or C) that should be returned
   vscode.postMessage({
     command: "weather",
-    location: location.value,
-    unit: unit.value,
+    location: word.value,
+    unit: "C",
+  });
+
+  displayLoadingState();
+}
+
+function searchWord() {
+  const word = document.getElementById("word") as TextField;
+  vscode.postMessage({
+    command: "search",
+    word: word.value
   });
 
   displayLoadingState();
@@ -121,6 +136,10 @@ function setVSCodeMessageListener() {
     const command = event.data.command;
 
     switch (command) {
+      case "search":
+        const dictData = JSON.parse(event.data.payload);
+        displayDictionaryData(dictData);
+        break;
       case "weather":
         const weatherData = JSON.parse(event.data.payload);
         displayWeatherData(weatherData);
@@ -208,4 +227,15 @@ function getWeatherIcon(weatherData) {
   }
 
   return icon;
+}
+
+function displayDictionaryData(dictData) {
+  const loading = document.getElementById("loading") as ProgressRing;
+  const wordTittle = document.getElementById("word-tittle");
+  const summary = document.getElementById("explanation");
+  if (loading && wordTittle && summary) {
+    loading.classList.add("hidden");
+    wordTittle.textContent = dictData.word;
+    summary.textContent = dictData.meanings[0].definitions[0].definition;
+  }
 }
