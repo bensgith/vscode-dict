@@ -1,12 +1,9 @@
 import {
   provideVSCodeDesignSystem,
   Button,
-  Dropdown,
-  ProgressRing,
   TextField,
+  ProgressRing,
   vsCodeButton,
-  vsCodeDropdown,
-  vsCodeOption,
   vsCodeTextField,
   vsCodeProgressRing, 
 } from '@vscode/webview-ui-toolkit';
@@ -31,10 +28,8 @@ import {
 // 
 provideVSCodeDesignSystem().register(
   vsCodeButton(),
-  vsCodeDropdown(),
-  vsCodeOption(),
-  vsCodeProgressRing(),
-  vsCodeTextField()
+  vsCodeTextField(),
+  vsCodeProgressRing()
 );
 
 // Get access to the VS Code API from within the webview context
@@ -55,12 +50,9 @@ function main() {
 
   const searchButton = document.getElementById("search-button") as Button;
   searchButton.addEventListener("click", searchWord);
-  searchButton.addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-      console.log("enter key");
-      searchWord;
-    }
-  });
+  const wordTextField = document.getElementById("word") as TextField;
+  // TODO key down event not working?
+  wordTextField.addEventListener("keydown", handleKeydown);
 
   setVSCodeMessageListener();
 }
@@ -104,20 +96,6 @@ function handleHowdyClick() {
   });
 }
 
-function checkWeather() {
-  const word = document.getElementById("word") as TextField;
-
-  // Passes a message back to the extension context with the location that
-  // should be searched for and the degree unit (F or C) that should be returned
-  vscode.postMessage({
-    command: "weather",
-    location: word.value,
-    unit: "C",
-  });
-
-  displayLoadingState();
-}
-
 function searchWord() {
   const word = document.getElementById("word") as TextField;
   vscode.postMessage({
@@ -128,6 +106,10 @@ function searchWord() {
   displayLoadingState();
 }
 
+function handleKeydown(e: KeyboardEvent) {
+  console.log("handling keydown");
+  console.log(e.key);
+}
 
 // Sets up an event listener to listen for messages passed from the extension context
 // and executes code based on the message that is recieved
@@ -140,10 +122,6 @@ function setVSCodeMessageListener() {
         const dictData = JSON.parse(event.data.payload);
         displayDictionaryData(dictData);
         break;
-      case "weather":
-        const weatherData = JSON.parse(event.data.payload);
-        displayWeatherData(weatherData);
-        break;
       case "error":
         displayError(event.data.message);
         break;
@@ -153,89 +131,29 @@ function setVSCodeMessageListener() {
 
 function displayLoadingState() {
   const loading = document.getElementById("loading") as ProgressRing;
-  const icon = document.getElementById("icon");
-  const summary = document.getElementById("summary");
-  if (loading && icon && summary) {
+  const explanation = document.getElementById("explanation");
+  if (loading && explanation) {
     loading.classList.remove("hidden");
-    icon.classList.add("hidden");
-    summary.textContent = "Getting weather...";
-  }
-}
-
-function displayWeatherData(weatherData) {
-  const loading = document.getElementById("loading") as ProgressRing;
-  const icon = document.getElementById("icon");
-  const summary = document.getElementById("summary");
-  if (loading && icon && summary) {
-    loading.classList.add("hidden");
-    icon.classList.remove("hidden");
-    icon.textContent = getWeatherIcon(weatherData);
-    summary.textContent = getWeatherSummary(weatherData);
+    explanation.textContent = "Searching word...";
   }
 }
 
 function displayError(errorMsg) {
   const loading = document.getElementById("loading") as ProgressRing;
-  const icon = document.getElementById("icon");
-  const summary = document.getElementById("summary");
-  if (loading && icon && summary) {
+  const explanation = document.getElementById("explanation");
+  if (loading && explanation) {
     loading.classList.add("hidden");
-    icon.classList.add("hidden");
-    summary.textContent = errorMsg;
+   explanation.textContent = errorMsg;
   }
-}
-
-function getWeatherSummary(weatherData) {
-  const skyText = weatherData.current.skytext;
-  const temperature = weatherData.current.temperature;
-  const degreeType = weatherData.location.degreetype;
-
-  return `${skyText}, ${temperature}${degreeType}`;
-}
-
-function getWeatherIcon(weatherData) {
-  const skyText = weatherData.current.skytext.toLowerCase();
-  let icon = "";
-
-  switch (skyText) {
-    case "sunny":
-      icon = "☀️";
-      break;
-    case "mostly sunny":
-      icon = "🌤";
-      break;
-    case "partly sunny":
-      icon = "🌥";
-      break;
-    case "clear":
-      icon = "☀️";
-      break;
-    case "fair":
-      icon = "🌥";
-      break;
-    case "mostly cloudy":
-      icon = "☁️";
-      break;
-    case "cloudy":
-      icon = "☁️";
-      break;
-    case "rain showers":
-      icon = "🌦";
-      break;
-    default:
-      icon = "✨";
-  }
-
-  return icon;
 }
 
 function displayDictionaryData(dictData) {
   const loading = document.getElementById("loading") as ProgressRing;
   const wordTittle = document.getElementById("word-tittle");
-  const summary = document.getElementById("explanation");
-  if (loading && wordTittle && summary) {
+  const explanation = document.getElementById("explanation");
+  if (loading && wordTittle && explanation) {
     loading.classList.add("hidden");
     wordTittle.textContent = dictData.word;
-    summary.textContent = dictData.meanings[0].definitions[0].definition;
+    explanation.textContent = dictData.meanings[0].definitions[0].definition;
   }
 }

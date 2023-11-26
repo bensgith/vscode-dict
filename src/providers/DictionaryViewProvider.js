@@ -4,7 +4,6 @@ exports.DictionaryViewProvider = void 0;
 const vscode_1 = require("vscode");
 const getUri_1 = require("../utilities/getUri");
 const getNonce_1 = require("../utilities/getNonce");
-const weather = require("weather-js");
 const axios_1 = require("axios");
 class DictionaryViewProvider {
     constructor(_extensionUri) {
@@ -43,17 +42,11 @@ class DictionaryViewProvider {
                     <h1>Search</h1>
                     <section id="search-container">
                         <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
-                        <!-- <vscode-dropdown id="unit">
-                            <vscode-option value="F">Fahrenheit</vscode-option>
-                            <vscode-option value="C">Celsius</vscode-option>
-                        </vscode-dropdown> -->
                     </section>
                     <vscode-button id="search-button">Search</vscode-button>
                     <h2 id="word-tittle"></h2>
                     <section id="results-container">
                         <vscode-progress-ring id="loading" class="hidden"></vscode-progress-ring>
-                        <!-- <p id="icon"></p>
-                        <p id="summary"></p> -->
                         <p id="explanation"></p>
                     </section>
                     <script type="module" nonce="${nonce}" src="${webviewUri}"></script>
@@ -64,28 +57,8 @@ class DictionaryViewProvider {
     _setWebviewMessageListener(webviewView) {
         webviewView.webview.onDidReceiveMessage((message) => {
             const command = message.command;
-            const location = message.location;
-            const unit = message.unit;
             const word = message.word;
             switch (command) {
-                case "weather":
-                    weather.find({ search: location, degreeType: unit }, (err, result) => {
-                        if (err) {
-                            webviewView.webview.postMessage({
-                                command: "error",
-                                message: "Sorry couldn't get weather at this time...",
-                            });
-                            return;
-                        }
-                        // Get the weather forecast results
-                        const weatherForecast = result[0];
-                        // Pass the weather forecast object to the webview
-                        webviewView.webview.postMessage({
-                            command: "weather",
-                            payload: JSON.stringify(weatherForecast),
-                        });
-                    });
-                    break;
                 case "search":
                     axios_1.default.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
                         .then(function (response) {
@@ -95,7 +68,11 @@ class DictionaryViewProvider {
                         });
                     })
                         .catch(function (error) {
-                        console.log("axios get error");
+                        webviewView.webview.postMessage({
+                            command: "error",
+                            message: "Sorry couldn't get explanation at this time...",
+                        });
+                        return;
                     });
                     break;
             }
