@@ -42,10 +42,10 @@ class DictionaryViewProvider {
                     <h1>Search</h1>
                     <section id="search-container">
                         <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
+                        <vscode-button id="search-button">Search</vscode-button>
                     </section>
-                    <vscode-button id="search-button">Search</vscode-button>
-                    <h2 id="word-tittle"></h2>
-                    <section id="results-container">
+                    <h2 id="result-tittle"></h2>
+                    <section id="result-container">
                         <vscode-progress-ring id="loading" class="hidden"></vscode-progress-ring>
                         <p id="explanation"></p>
                     </section>

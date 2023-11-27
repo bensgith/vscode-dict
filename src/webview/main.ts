@@ -127,30 +127,35 @@ function setVSCodeMessageListener() {
 }
 
 function displayLoadingState() {
+  const wordTittle = document.getElementById("result-tittle");
   const loading = document.getElementById("loading") as ProgressRing;
   const explanation = document.getElementById("explanation");
-  if (loading && explanation) {
+  if (wordTittle && loading && explanation) {
+    wordTittle.classList.add("hidden");
     loading.classList.remove("hidden");
-    explanation.textContent = "Searching word...";
+    explanation.textContent = "Searching...";
   }
 }
 
 function displayError(errorMsg) {
   const loading = document.getElementById("loading") as ProgressRing;
   const explanation = document.getElementById("explanation");
-  if (loading && explanation) {
+  const wordTittle = document.getElementById("result-tittle");
+  if (loading && explanation && wordTittle) {
     loading.classList.add("hidden");
-   explanation.textContent = errorMsg;
+    wordTittle.classList.add("hidden");
+    explanation.textContent = errorMsg;
   }
 }
 
 function displayDictionaryData(dictData) {
   const loading = document.getElementById("loading") as ProgressRing;
-  const wordTittle = document.getElementById("word-tittle");
+  const wordTittle = document.getElementById("result-tittle");
   const explanation = document.getElementById("explanation");
   if (loading && wordTittle && explanation) {
     loading.classList.add("hidden");
-    wordTittle.textContent = dictData.word;
+    wordTittle.classList.remove("hidden");
+    wordTittle.textContent = dictData.word + " " + dictData.phonetic;
     explanation.textContent = dictData.meanings[0].definitions[0].definition;
   }
 }

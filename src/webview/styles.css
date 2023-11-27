@@ -18,10 +18,10 @@ h1 {
   margin-top: 0.5rem;
 }
 
-#results-container {
+#result-container {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: left;
   background-color: var(--vscode-input-background);
   padding: 1rem;
   margin: 1rem 0;
