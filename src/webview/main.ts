@@ -51,8 +51,11 @@ function main() {
   const searchButton = document.getElementById("search-button") as Button;
   searchButton.addEventListener("click", searchWord);
   const wordTextField = document.getElementById("word") as TextField;
-  // TODO key down event not working?
-  wordTextField.addEventListener("keydown", handleKeydown);
+  wordTextField.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      searchWord();
+    }
+  });
 
   setVSCodeMessageListener();
 }
@@ -102,13 +105,7 @@ function searchWord() {
     command: "search",
     word: word.value
   });
-
   displayLoadingState();
-}
-
-function handleKeydown(e: KeyboardEvent) {
-  console.log("handling keydown");
-  console.log(e.key);
 }
 
 // Sets up an event listener to listen for messages passed from the extension context
