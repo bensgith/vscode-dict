@@ -27,7 +27,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                 // Enable JavaScript in the webview
                 enableScripts: true,
                 // Restrict the webview to only load resources from the `out` directory
-                localResourceRoots: [Uri.joinPath(this._extensionUri, "out")],
+                localResourceRoots: [Uri.joinPath(this._extensionUri, "out"), Uri.joinPath(this._extensionUri, "node_modules")],
             };
 
             // Set the HTML content that will fill the webview view
@@ -42,6 +42,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
     private _getWebviewContent(webview: Webview, _extensionUri: Uri): string {
         const webviewUri = getUri(webview, _extensionUri, ["out", "webview.js"]);
         const stylesUri = getUri(webview, _extensionUri, ["out", "styles.css"]);
+        const codiconsUri = getUri(webview, _extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
         const nonce = getNonce();
 
         return /*html*/ `
@@ -50,15 +51,18 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+                    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}'; font-src ${webview.cspSource};">
                     <link rel="stylesheet" href="${stylesUri}">
-                    <title>Weather Checker</title>
+                    <link rel="stylesheet" href="${codiconsUri}"/>
+                    <title>Dictionary</title>
                 </head>
                 <body>
-                    <h1>Search</h1>
                     <section id="search-container">
                         <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
-                        <vscode-button id="search-button">Search</vscode-button>
+                        <vscode-button id="search-button">
+                            Search
+                            <span slot="start" class="codicon codicon-search"></span>
+                        </vscode-button>
                     </section>
                     <h2 id="result-tittle"></h2>
                     <section id="result-container">
