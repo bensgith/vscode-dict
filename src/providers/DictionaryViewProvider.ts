@@ -59,10 +59,10 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                         <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
                         <vscode-button id="search-button">Search</vscode-button>
                     </section>
-                    <h2 id="result-tittle"></h2>
+                    <h2 id="result-title"></h2>
                     <section id="result-container">
                         <vscode-progress-ring id="loading" class="hidden"></vscode-progress-ring>
-                        <p id="explanation"></p>
+                        <p id="definition"></p>
                     </section>
                     <script type="module" nonce="${nonce}" src="${webviewUri}"></script>
                 </body>
@@ -87,7 +87,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                 .catch(function (error) {
                     webviewView.webview.postMessage({
                         command: "error",
-                        message: "Sorry couldn't get explanation at this time...",
+                        message: "Sorry couldn't get definition at this time...",
                     });
                     return;
                 });

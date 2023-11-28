@@ -85,35 +85,35 @@ function setVSCodeMessageListener() {
 }
 
 function displayLoadingState() {
-  const wordTittle = document.getElementById("result-tittle");
+  const wordTittle = document.getElementById("result-title");
   const loading = document.getElementById("loading") as ProgressRing;
-  const explanation = document.getElementById("explanation");
-  if (wordTittle && loading && explanation) {
+  const definition = document.getElementById("definition");
+  if (wordTittle && loading && definition) {
     wordTittle.classList.add("hidden");
     loading.classList.remove("hidden");
-    explanation.textContent = "Searching...";
+    definition.textContent = "Searching...";
   }
 }
 
 function displayError(errorMsg) {
   const loading = document.getElementById("loading") as ProgressRing;
-  const explanation = document.getElementById("explanation");
-  const wordTittle = document.getElementById("result-tittle");
-  if (loading && explanation && wordTittle) {
+  const definition = document.getElementById("definition");
+  const wordTittle = document.getElementById("result-title");
+  if (loading && definition && wordTittle) {
     loading.classList.add("hidden");
     wordTittle.classList.add("hidden");
-    explanation.textContent = errorMsg;
+    definition.textContent = errorMsg;
   }
 }
 
 function displayDictionaryData(dictData) {
   const loading = document.getElementById("loading") as ProgressRing;
-  const wordTittle = document.getElementById("result-tittle");
-  const explanation = document.getElementById("explanation");
-  if (loading && wordTittle && explanation) {
+  const wordTittle = document.getElementById("result-title");
+  const definition = document.getElementById("definition");
+  if (loading && wordTittle && definition) {
     loading.classList.add("hidden");
     wordTittle.classList.remove("hidden");
     wordTittle.textContent = dictData.word + " " + dictData.phonetic;
-    explanation.textContent = dictData.meanings[0].definitions[0].definition;
+    definition.textContent = dictData.meanings[0].definitions[0].definition;
   }
 }
