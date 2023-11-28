@@ -21,6 +21,15 @@ const extensionConfig = {
   entryPoints: ["./src/extension.ts"],
   outfile: "./out/extension.js",
   external: ["vscode"],
+  plugins: [
+    copy({
+      resolveFrom: "cwd",
+      assets: {
+        from: ["./src/images/*.png"],
+        to: ["./out"],
+      },
+    }),
+  ],
 };
 
 // Config for webview source code (to be run in a web-based context)

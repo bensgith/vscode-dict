@@ -2,6 +2,7 @@
   "name": "vscode-dict",
   "displayName": "VS Dictionary",
   "description": "An English dictionary for VS Code",
+  "icon": "./out/dict256.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.84.0"
