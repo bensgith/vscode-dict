@@ -114,6 +114,17 @@ function displayDictionaryData(dictData) {
     loading.classList.add("hidden");
     wordTittle.classList.remove("hidden");
     wordTittle.textContent = dictData.word + " " + dictData.phonetic;
-    definition.textContent = dictData.meanings[0].definitions[0].definition;
+    definition.innerHTML = extractDefinitions(dictData);
   }
+}
+
+function extractDefinitions(dictData) {
+  var meaningsHtml = "<ul>";
+  if (dictData.meanings.length > 0) {
+    for (let i = 0; i < dictData.meanings.length; i++) {
+      var meaning = dictData.meanings[i];
+      meaningsHtml = meaningsHtml + "<li>" + meaning.partOfSpeech + ": " + meaning.definitions[0].definition + "</li>";
+    }
+  }
+  return meaningsHtml + "</ul>";
 }
