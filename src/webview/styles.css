@@ -24,9 +24,18 @@ h1 {
   align-items: center;
   justify-content: left;
   background-color: var(--vscode-input-background);
-  padding: 1rem;
+  padding: 0 0.5rem;
   margin: 1rem 0;
   border-radius: 2px;
+}
+
+#result-container ul {
+  padding: 0 1rem;
+  margin: 0;
+}
+
+#result-container li {
+  margin: 0.5rem 0;
 }
 
 .hidden {

@@ -85,11 +85,11 @@ function setVSCodeMessageListener() {
 }
 
 function displayLoadingState() {
-  const wordTittle = document.getElementById("result-title");
+  const resultTitle = document.getElementById("result-title");
   const loading = document.getElementById("loading") as ProgressRing;
   const definition = document.getElementById("definition");
-  if (wordTittle && loading && definition) {
-    wordTittle.classList.add("hidden");
+  if (resultTitle && loading && definition) {
+    resultTitle.classList.add("hidden");
     loading.classList.remove("hidden");
     definition.textContent = "Searching...";
   }
@@ -98,22 +98,22 @@ function displayLoadingState() {
 function displayError(errorMsg) {
   const loading = document.getElementById("loading") as ProgressRing;
   const definition = document.getElementById("definition");
-  const wordTittle = document.getElementById("result-title");
-  if (loading && definition && wordTittle) {
+  const resultTitle = document.getElementById("result-title");
+  if (loading && definition && resultTitle) {
     loading.classList.add("hidden");
-    wordTittle.classList.add("hidden");
+    resultTitle.classList.add("hidden");
     definition.textContent = errorMsg;
   }
 }
 
 function displayDictionaryData(dictData) {
   const loading = document.getElementById("loading") as ProgressRing;
-  const wordTittle = document.getElementById("result-title");
+  const resultTitle = document.getElementById("result-title");
   const definition = document.getElementById("definition");
-  if (loading && wordTittle && definition) {
+  if (loading && resultTitle && definition) {
     loading.classList.add("hidden");
-    wordTittle.classList.remove("hidden");
-    wordTittle.textContent = dictData.word + " " + dictData.phonetic;
+    resultTitle.classList.remove("hidden");
+    resultTitle.textContent = extractPhonetic(dictData);
     definition.innerHTML = extractDefinitions(dictData);
   }
 }
@@ -123,8 +123,25 @@ function extractDefinitions(dictData) {
   if (dictData.meanings.length > 0) {
     for (let i = 0; i < dictData.meanings.length; i++) {
       var meaning = dictData.meanings[i];
-      meaningsHtml = meaningsHtml + "<li>" + meaning.partOfSpeech + ": " + meaning.definitions[0].definition + "</li>";
+      meaningsHtml = meaningsHtml + "<li>[<i>" + meaning.partOfSpeech + "</i>]: " + meaning.definitions[0].definition;
+      if (meaning.definitions[0].example !== undefined) {
+        meaningsHtml = meaningsHtml + "<br/>e.g. " + meaning.definitions[0].example;
+      }
+      meaningsHtml = meaningsHtml + "</li>";
     }
   }
   return meaningsHtml + "</ul>";
+}
+
+function extractPhonetic(dictData) {
+  if (dictData.phonetic !== undefined) {
+    return dictData.word + " " + dictData.phonetic;
+  } else if (dictData.phonetics.length > 0) {
+    for (let i = 0; i < dictData.phonetics.length; i++) {
+      if (dictData.phonetics[i].text !== undefined) {
+        return dictData.word + " " + dictData.phonetics[i].text;
+      }
+    }
+  }
+  return "";
 }
