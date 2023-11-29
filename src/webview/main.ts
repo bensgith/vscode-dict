@@ -85,13 +85,12 @@ function setVSCodeMessageListener() {
 }
 
 function displayLoadingState() {
-  const resultTitle = document.getElementById("result-title");
   const loading = document.getElementById("loading") as ProgressRing;
   const definition = document.getElementById("definition");
-  if (resultTitle && loading && definition) {
-    resultTitle.classList.add("hidden");
+  if (loading && definition) {
     loading.classList.remove("hidden");
-    definition.textContent = "Searching...";
+    definition.classList.remove("hidden");
+    definition.innerHTML = "<p>Searching...</p>";
   }
 }
 
@@ -113,6 +112,7 @@ function displayDictionaryData(dictData) {
   if (loading && resultTitle && definition) {
     loading.classList.add("hidden");
     resultTitle.classList.remove("hidden");
+    definition.classList.remove("hidden");
     resultTitle.textContent = extractPhonetic(dictData);
     definition.innerHTML = extractDefinitions(dictData);
   }
