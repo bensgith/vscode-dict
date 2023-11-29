@@ -137,18 +137,23 @@ function displayDictionaryData(dictData) {
  * @returns 
  */
 function extractDefinitions(dictData) {
-  var meaningsHtml = "<ol>";
+  var defHtml = "<ol>";
   if (dictData.meanings.length > 0) {
     for (let i = 0; i < dictData.meanings.length; i++) {
       var meaning = dictData.meanings[i];
-      meaningsHtml = meaningsHtml + "<li>[<i>" + meaning.partOfSpeech + "</i>]: " + meaning.definitions[0].definition;
-      if (meaning.definitions[0].example !== undefined) {
-        meaningsHtml = meaningsHtml + "<br/>e.g. " + meaning.definitions[0].example;
-      }
-      meaningsHtml = meaningsHtml + "</li>";
+      var partOfSpeech = meaning.partOfSpeech;
+      if (meaning.definitions.length > 0) {
+        for (let j = 0; j < meaning.definitions.length; j++) {
+          defHtml = defHtml + "<li>[<i>" + partOfSpeech + "</i>] " + meaning.definitions[j].definition;
+          if (meaning.definitions[j].example !== undefined) {
+            defHtml = defHtml + "<br/>e.g. " + meaning.definitions[j].example;
+          }
+        }
+        defHtml = defHtml + "</li>";
+      }      
     }
   }
-  return meaningsHtml + "</ol>";
+  return defHtml + "</ol>";
 }
 
 /**
