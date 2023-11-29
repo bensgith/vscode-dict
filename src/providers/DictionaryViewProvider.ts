@@ -56,7 +56,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                 </head>
                 <body>
                     <section id="search-container">
-                        <vscode-text-field id="word" placeholder="Input your word"></vscode-text-field>
+                        <vscode-text-field id="word" placeholder="Input your word" autofocus></vscode-text-field>
                         <vscode-button id="search-button">Search</vscode-button>
                     </section>
                     <h1 id="result-title" class="hidden"></h1>
@@ -87,7 +87,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                 .catch(function (error) {
                     webviewView.webview.postMessage({
                         command: "error",
-                        message: "Sorry couldn't get definition at this time...",
+                        message: "Oops, definition not found...",
                     });
                     return;
                 });

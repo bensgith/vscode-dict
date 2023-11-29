@@ -101,7 +101,7 @@ function displayError(errorMsg) {
   if (loading && definition && resultTitle) {
     loading.classList.add("hidden");
     resultTitle.classList.add("hidden");
-    definition.textContent = errorMsg;
+    definition.innerHTML = "<p>" + errorMsg + "</p>";
   }
 }
 
@@ -113,7 +113,7 @@ function displayDictionaryData(dictData) {
     loading.classList.add("hidden");
     resultTitle.classList.remove("hidden");
     definition.classList.remove("hidden");
-    resultTitle.textContent = extractPhonetic(dictData);
+    resultTitle.textContent = extractWordAndPhonetic(dictData);
     definition.innerHTML = extractDefinitions(dictData);
   }
 }
@@ -133,15 +133,16 @@ function extractDefinitions(dictData) {
   return meaningsHtml + "</ul>";
 }
 
-function extractPhonetic(dictData) {
+function extractWordAndPhonetic(dictData) {
+  var wordAndPhonetic = dictData.word;
   if (dictData.phonetic !== undefined) {
-    return dictData.word + " " + dictData.phonetic;
+    return wordAndPhonetic + " " + dictData.phonetic;
   } else if (dictData.phonetics.length > 0) {
     for (let i = 0; i < dictData.phonetics.length; i++) {
       if (dictData.phonetics[i].text !== undefined) {
-        return dictData.word + " " + dictData.phonetics[i].text;
+        return wordAndPhonetic + " " + dictData.phonetics[i].text;
       }
     }
   }
-  return "";
+  return wordAndPhonetic;
 }
