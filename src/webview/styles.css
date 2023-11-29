@@ -25,11 +25,11 @@
   border-radius: 2px;
 }
 
-#result-container ul {
+#result-container ol {
   padding-left: 1rem;
 }
 
-#result-container ul li {
+#result-container ol li {
   margin: 0.5rem 0;
 }
 

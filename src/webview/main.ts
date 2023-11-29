@@ -55,6 +55,7 @@ function main() {
   });
 
   setVSCodeMessageListener();
+  clearResult();
 }
 
 function searchWord() {
@@ -85,32 +86,43 @@ function setVSCodeMessageListener() {
 }
 
 function displayLoadingState() {
+  clearResult();
   const loading = document.getElementById("loading") as ProgressRing;
-  const definition = document.getElementById("definition");
-  if (loading && definition) {
+  const resultMsg = document.getElementById("result-message");
+  if (loading && resultMsg) {
     loading.classList.remove("hidden");
-    definition.classList.remove("hidden");
-    definition.innerHTML = "<p>Searching...</p>";
+    resultMsg.classList.remove("hidden");
+    resultMsg.textContent = "Searching...";
+  }
+}
+
+function clearResult() {
+  const resultTitle = document.getElementById("result-title");
+  const loading = document.getElementById("loading") as ProgressRing;
+  const resultMsg = document.getElementById("result-message");
+  const definition = document.getElementById("definition");
+  if (resultTitle && loading && resultMsg && definition) {
+    resultTitle.classList.add("hidden");
+    loading.classList.add("hidden");
+    resultMsg.classList.add("hidden");
+    definition.classList.add("hidden");
   }
 }
 
 function displayError(errorMsg) {
-  const loading = document.getElementById("loading") as ProgressRing;
-  const definition = document.getElementById("definition");
-  const resultTitle = document.getElementById("result-title");
-  if (loading && definition && resultTitle) {
-    loading.classList.add("hidden");
-    resultTitle.classList.add("hidden");
-    definition.innerHTML = "<p>" + errorMsg + "</p>";
+  clearResult();
+  const resultMsg = document.getElementById("result-message");
+  if (resultMsg) {
+    resultMsg.classList.remove("hidden");
+    resultMsg.textContent = errorMsg;
   }
 }
 
 function displayDictionaryData(dictData) {
-  const loading = document.getElementById("loading") as ProgressRing;
+  clearResult();
   const resultTitle = document.getElementById("result-title");
   const definition = document.getElementById("definition");
-  if (loading && resultTitle && definition) {
-    loading.classList.add("hidden");
+  if (resultTitle && definition) {
     resultTitle.classList.remove("hidden");
     definition.classList.remove("hidden");
     resultTitle.textContent = extractWordAndPhonetic(dictData);
@@ -119,7 +131,7 @@ function displayDictionaryData(dictData) {
 }
 
 function extractDefinitions(dictData) {
-  var meaningsHtml = "<ul>";
+  var meaningsHtml = "<ol>";
   if (dictData.meanings.length > 0) {
     for (let i = 0; i < dictData.meanings.length; i++) {
       var meaning = dictData.meanings[i];
@@ -130,7 +142,7 @@ function extractDefinitions(dictData) {
       meaningsHtml = meaningsHtml + "</li>";
     }
   }
-  return meaningsHtml + "</ul>";
+  return meaningsHtml + "</ol>";
 }
 
 function extractWordAndPhonetic(dictData) {

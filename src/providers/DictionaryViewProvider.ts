@@ -59,10 +59,11 @@ export class DictionaryViewProvider implements WebviewViewProvider {
                         <vscode-text-field id="word" placeholder="Input your word" autofocus></vscode-text-field>
                         <vscode-button id="search-button">Search</vscode-button>
                     </section>
-                    <h1 id="result-title" class="hidden"></h1>
-                    <section id="result-container" class="hidden">
-                        <vscode-progress-ring id="loading" class="hidden"></vscode-progress-ring>
-                        <div id="definition" class="hidden"></div>
+                    <h1 id="result-title"></h1>
+                    <section id="result-container">
+                        <vscode-progress-ring id="loading"></vscode-progress-ring>
+                        <p id="result-message"></p>
+                        <div id="definition"></div>
                     </section>
                     <script type="module" nonce="${nonce}" src="${webviewUri}"></script>
                 </body>
