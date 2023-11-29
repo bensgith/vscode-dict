@@ -130,6 +130,12 @@ function displayDictionaryData(dictData) {
   }
 }
 
+/**
+ * Extract definitions from response data from api.dictionaryapi.dev
+ * 
+ * @param dictData 
+ * @returns 
+ */
 function extractDefinitions(dictData) {
   var meaningsHtml = "<ol>";
   if (dictData.meanings.length > 0) {
@@ -145,6 +151,11 @@ function extractDefinitions(dictData) {
   return meaningsHtml + "</ol>";
 }
 
+/**
+ * Extract word and phonetic from response data from api.dictionaryapi.dev
+ * @param dictData 
+ * @returns 
+ */
 function extractWordAndPhonetic(dictData) {
   var wordAndPhonetic = dictData.word;
   if (dictData.phonetic !== undefined) {

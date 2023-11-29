@@ -78,22 +78,26 @@ export class DictionaryViewProvider implements WebviewViewProvider {
     
           switch (command) {
             case "search":
-                axios.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
-                .then(function (response) {
-                    webviewView.webview.postMessage({
-                        command: "search",
-                        payload: JSON.stringify(response.data[0]),
-                    });
-                })
-                .catch(function (error) {
-                    webviewView.webview.postMessage({
-                        command: "error",
-                        message: "Oops, definition not found...",
-                    });
-                    return;
-                });
+                this._callDictionaryApi(webviewView, word);
                 break;
             }
+        });
+    }
+
+    private _callDictionaryApi(webviewView: WebviewView, word: String) {
+        axios.get("https://api.dictionaryapi.dev/api/v2/entries/en/" + word)
+        .then(function (response) {
+            webviewView.webview.postMessage({
+                command: "search",
+                payload: JSON.stringify(response.data[0]),
+            });
+        })
+        .catch(function (error) {
+            webviewView.webview.postMessage({
+                command: "error",
+                message: "Oops, definition not found...",
+            });
+            return;
         });
     }
 }
