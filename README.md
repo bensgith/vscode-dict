@@ -1,10 +1,11 @@
-# vscode-dict README
+# VS Code Dictionary
 
 An Englihs dictionary for developers to quickly search definition of English words.
 
 ## Features
 
-- Provide quick search for English words
+- Quick search for English words
+- English definitions and examples
 
 ## Requirements
 
@@ -12,7 +13,7 @@ An Englihs dictionary for developers to quickly search definition of English wor
 
 ## Extension Settings
 
-- No settings required
+- Not required
 
 ## Known Issues
 
@@ -20,14 +21,8 @@ N/A
 
 ## Release Notes
 
-
 ### 0.0.1
 
 Initial release
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
 
 **Enjoy!**
