@@ -7,7 +7,13 @@ export function activate(context: ExtensionContext) {
 	const dictProvider = new DictionaryViewProvider(context.extensionUri);
 	let dictViewDisposable = window.registerWebviewViewProvider(
 		DictionaryViewProvider.viewType,
-		dictProvider
+		dictProvider,
+		{
+			webviewOptions: {
+				// save webview state when invisible
+				retainContextWhenHidden: true
+			}
+		}
 	);
 	context.subscriptions.push(dictViewDisposable);
 }
