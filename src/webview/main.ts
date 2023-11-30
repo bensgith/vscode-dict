@@ -132,6 +132,7 @@ function displayDictionaryData(dictData) {
 
 /**
  * Extract definitions from response data from api.dictionaryapi.dev
+ * Link: https://github.com/meetDeveloper/freeDictionaryAPI
  * 
  * @param dictData 
  * @returns 
@@ -158,6 +159,8 @@ function extractDefinitions(dictData) {
 
 /**
  * Extract word and phonetic from response data from api.dictionaryapi.dev
+ * Link: https://github.com/meetDeveloper/freeDictionaryAPI
+ * 
  * @param dictData 
  * @returns 
  */
