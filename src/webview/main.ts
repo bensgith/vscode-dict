@@ -47,7 +47,11 @@ function main() {
   // to the element (i.e. the `as Button` syntax)
   const searchButton = document.getElementById("search-button") as Button;
   searchButton.addEventListener("click", searchWord);
-  const wordTextField = document.getElementById("word") as TextField;
+  const wordTextField = document.getElementById("word") as HTMLInputElement;
+  wordTextField.addEventListener("click", (event) => {
+    wordTextField.focus();
+    wordTextField.select();
+  });
   wordTextField.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       searchWord();
