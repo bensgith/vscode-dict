@@ -1,7 +1,8 @@
 {
-  "name": "vscode-dict",
+  "name": "vscode-dictionary",
   "displayName": "VS Dictionary",
   "description": "An English dictionary for VS Code",
+  "publisher": "BingxiLiang",
   "icon": "./out/dict256.png",
   "version": "0.0.1",
   "engines": {
