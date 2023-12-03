@@ -1,4 +1,4 @@
-import { ExtensionContext, window } from "vscode";
+import { ExtensionContext, commands, window } from "vscode";
 import { DictionaryViewProvider } from "./providers/SearchViewProvider";
 import { HistoryTreeViewProvider } from "./providers/HistoryTreeViewProvider";
 
@@ -25,6 +25,10 @@ export function activate(context: ExtensionContext) {
 		historyTreeProvider
 	);
 	context.subscriptions.push(hisTreeViewDisposable);
+
+	// register add history command
+	commands.registerCommand("dictionary.addHistory", (word: string) => historyTreeProvider.add(word));
+	commands.registerCommand("dictionary.refreshHistory", () => historyTreeProvider.refresh());
 }
 
 export function deactivate() {}

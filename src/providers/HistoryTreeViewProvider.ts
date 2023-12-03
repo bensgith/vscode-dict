@@ -1,12 +1,15 @@
 import { 
     CancellationToken, 
     Event, 
+    EventEmitter, 
     ProviderResult, 
     TreeDataProvider, 
     TreeItem,
     TreeItemCollapsibleState,
-    Uri
+    Uri,
+    window
 } from "vscode";
+import * as path from 'path';
 
 export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
     public static readonly viewType = "dictionary.history";
@@ -20,7 +23,19 @@ export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
         // empty
     }
 
-    onDidChangeTreeData?: Event<void | Word | Word[] | null | undefined> | undefined;
+    private _onDidChangeTreeData: EventEmitter<Word | undefined | null | void> = new EventEmitter<Word | undefined | null | void>();
+
+    readonly onDidChangeTreeData?: Event<void | Word | Word[] | null | undefined> | undefined = this._onDidChangeTreeData.event;
+
+    refresh(): void {
+        this._onDidChangeTreeData.fire();
+        window.showInformationMessage("refreshed");
+    }
+
+    add(word: string): void {
+        this.historyWords.push(new Word(word, TreeItemCollapsibleState.None));
+        this._onDidChangeTreeData.fire();
+    }
 
     // Implement this to return the UI representation (TreeItem) of the element that gets displayed in the view.
     getTreeItem(element: Word): TreeItem | Thenable<TreeItem> {
@@ -45,11 +60,16 @@ export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
 
 export class Word extends TreeItem {
 
-    constructor(
-        public readonly label: string,
-        public readonly collapsibleState: TreeItemCollapsibleState
-      ) {
+    constructor(public readonly label: string, 
+        public readonly collapsibleState: TreeItemCollapsibleState) {
         super(label, collapsibleState);
         this.tooltip = `${this.label}`;
-      }
+    }
+
+    iconPath = {
+        light: path.join(__filename, '..', '..', 'resources', 'dependency-light.svg'),
+        dark: path.join(__filename, '..', '..', 'resources', 'dependency-dark.svg')
+    };
+
+    contextValue = 'word';
 }
