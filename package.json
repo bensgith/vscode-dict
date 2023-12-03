@@ -17,18 +17,23 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "dict-search",
+          "id": "vsdict",
           "title": "Dictionary",
           "icon": "$(book)"
         }
       ]
     },
     "views": {
-      "dict-search": [
+      "vsdict": [
         {
           "type": "webview",
-          "id": "dictionary.view",
-          "name": ""
+          "id": "dictionary.search",
+          "name": "Search"
+        },
+        {
+          "type": "tree",
+          "id": "dictionary.history",
+          "name": "History"
         }
       ]
     }

@@ -1,9 +1,10 @@
-import { ExtensionContext, commands, window } from "vscode";
-import { DictionaryViewProvider } from "./providers/DictionaryViewProvider";
+import { ExtensionContext, window } from "vscode";
+import { DictionaryViewProvider } from "./providers/SearchViewProvider";
+import { HistoryTreeViewProvider } from "./providers/HistoryTreeViewProvider";
 
 
 export function activate(context: ExtensionContext) {
-	// register views
+	// register search view
 	const dictProvider = new DictionaryViewProvider(context.extensionUri);
 	let dictViewDisposable = window.registerWebviewViewProvider(
 		DictionaryViewProvider.viewType,
@@ -16,6 +17,14 @@ export function activate(context: ExtensionContext) {
 		}
 	);
 	context.subscriptions.push(dictViewDisposable);
+
+	// register history tree view
+	const historyTreeProvider = new HistoryTreeViewProvider(context.extensionUri);
+	let hisTreeViewDisposable = window.registerTreeDataProvider(
+		HistoryTreeViewProvider.viewType,
+		historyTreeProvider
+	);
+	context.subscriptions.push(hisTreeViewDisposable);
 }
 
 export function deactivate() {}

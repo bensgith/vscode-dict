@@ -1,5 +1,6 @@
 import { 
     CancellationToken, 
+    TreeItemCollapsibleState, 
     Uri, 
     Webview, 
     WebviewView, 
@@ -11,7 +12,7 @@ import { getNonce } from "../utilities/getNonce";
 import axios from "axios";
 
 export class DictionaryViewProvider implements WebviewViewProvider {
-    public static readonly viewType = "dictionary.view";
+    public static readonly viewType = "dictionary.search";
 
     constructor(private readonly _extensionUri: Uri) {
         // empty
