@@ -4,7 +4,7 @@
   "description": "An English dictionary for VS Code",
   "publisher": "BingxiLiang",
   "icon": "./resources/dict256.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.84.0"
   },
