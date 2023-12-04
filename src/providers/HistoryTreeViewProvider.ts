@@ -3,13 +3,12 @@ import {
     Event, 
     EventEmitter, 
     ProviderResult, 
+    ThemeIcon, 
     TreeDataProvider, 
     TreeItem,
     TreeItemCollapsibleState,
-    Uri,
-    window
+    Uri
 } from "vscode";
-import * as path from 'path';
 
 export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
     public static readonly viewType = "dictionary.history";
@@ -65,10 +64,7 @@ export class Word extends TreeItem {
         this.tooltip = `${this.label}`;
     }
 
-    iconPath = {
-        light: path.join(__filename, '..', '..', 'resources', 'letter-w-draw-light.svg'),
-        dark: path.join(__filename, '..', '..', 'resources', 'letter-w-draw-dark.svg')
-    };
+    iconPath = new ThemeIcon("selection");
 
     contextValue = 'word';
 }
