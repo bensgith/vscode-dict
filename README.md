@@ -6,6 +6,7 @@ An Englihs dictionary for developers to quickly search definition of English wor
 
 - Quick search for English words
 - English definitions and examples
+- Save search history
 
 ## Requirements
 
@@ -18,12 +19,6 @@ An Englihs dictionary for developers to quickly search definition of English wor
 2. `npm install` to download dependencies
 3. `npm run compile` to compile source code
 4. Press `F5` to run with debugging
-5. Navigate to `VS Code -> Activity Bar -> Dictionary`
-
-## Release Notes
-
-### 0.0.1
-
-Initial release
+5. Navigate to `VS Code -> Activity Bar -> VS Dictionary`
 
 **Enjoy!**
