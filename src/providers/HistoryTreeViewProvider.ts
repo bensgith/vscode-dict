@@ -13,11 +13,7 @@ import * as path from 'path';
 
 export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
     public static readonly viewType = "dictionary.history";
-    public historyWords: Word[] = [
-        new Word('apple', TreeItemCollapsibleState.None),
-        new Word('banana', TreeItemCollapsibleState.None),
-        new Word('cherry', TreeItemCollapsibleState.None)
-    ];
+    public historyWords: Word[] = [];
 
     constructor(private readonly _extensionUri: Uri) {
         // empty
@@ -27,13 +23,16 @@ export class HistoryTreeViewProvider implements TreeDataProvider<Word> {
 
     readonly onDidChangeTreeData?: Event<void | Word | Word[] | null | undefined> | undefined = this._onDidChangeTreeData.event;
 
-    refresh(): void {
+    clearHistory(): void {
+        this.historyWords = [];
         this._onDidChangeTreeData.fire();
-        window.showInformationMessage("refreshed");
     }
 
-    add(word: string): void {
-        this.historyWords.push(new Word(word, TreeItemCollapsibleState.None));
+    addToHistory(word: string): void {
+        const newWord = new Word(word, TreeItemCollapsibleState.None);
+        // remove if duplicates
+        this.historyWords = this.historyWords.filter((item) => item.label !== newWord.label);
+        this.historyWords.unshift(newWord);
         this._onDidChangeTreeData.fire();
     }
 
@@ -67,8 +66,8 @@ export class Word extends TreeItem {
     }
 
     iconPath = {
-        light: path.join(__filename, '..', '..', 'resources', 'dependency-light.svg'),
-        dark: path.join(__filename, '..', '..', 'resources', 'dependency-dark.svg')
+        light: path.join(__filename, '..', '..', 'resources', 'letter-w-draw-light.svg'),
+        dark: path.join(__filename, '..', '..', 'resources', 'letter-w-draw-dark.svg')
     };
 
     contextValue = 'word';

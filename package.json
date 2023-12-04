@@ -39,43 +39,17 @@
     },
     "commands": [
       {
-        "command": "dictionary.refreshHistory",
-        "title": "Refresh History",
-        "icon": {
-          "light": "src/images/refresh-light.svg",
-          "dark": "src/images/refresh-dark.svg"
-        }
-      },
-			{
-				"command": "dictionary.editEntry",
-				"title": "Edit",
-				"icon": {
-					"light": "src/images/edit-light.svg",
-					"dark": "src/images/edit-dark.svg"
-				}
-			},
-			{
-				"command": "dictionary.deleteEntry",
-				"title": "Delete"
-			}
+        "command": "dictionary.clearHistory",
+        "title": "Clear History",
+        "icon": "$(clear-all)"
+      }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "dictionary.refreshHistory",
+          "command": "dictionary.clearHistory",
           "when": "view == dictionary.history",
           "group": "navigation"
-        }
-      ],
-      "view/item/context": [
-        {
-          "command": "dictionary.editEntry",
-          "when": "view == dictionary.history && viewItem == word",
-          "group": "inline"
-        },
-        {
-          "command": "dictionary.deleteEntry",
-          "when": "view == dictionary.history && viewItem == word"
         }
       ]
     }

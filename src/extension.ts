@@ -27,8 +27,8 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(hisTreeViewDisposable);
 
 	// register add history command
-	commands.registerCommand("dictionary.addHistory", (word: string) => historyTreeProvider.add(word));
-	commands.registerCommand("dictionary.refreshHistory", () => historyTreeProvider.refresh());
+	commands.registerCommand("dictionary.addHistory", (word: string) => historyTreeProvider.addToHistory(word));
+	commands.registerCommand("dictionary.clearHistory", () => historyTreeProvider.clearHistory());
 }
 
 export function deactivate() {}
