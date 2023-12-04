@@ -18,8 +18,8 @@
       "activitybar": [
         {
           "id": "vsdict",
-          "title": "Dictionary",
-          "icon": "$(book)"
+          "title": "VS Dictionary",
+          "icon": "./resources/dictionary128.svg"
         }
       ]
     },
