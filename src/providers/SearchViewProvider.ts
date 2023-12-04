@@ -1,17 +1,20 @@
 import { 
     CancellationToken, 
+    TreeItemCollapsibleState, 
     Uri, 
     Webview, 
     WebviewView, 
     WebviewViewProvider, 
-    WebviewViewResolveContext 
+    WebviewViewResolveContext,
+    commands,
+    window
 } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
 import axios from "axios";
 
 export class DictionaryViewProvider implements WebviewViewProvider {
-    public static readonly viewType = "dictionary.view";
+    public static readonly viewType = "dictionary.search";
 
     constructor(private readonly _extensionUri: Uri) {
         // empty
@@ -79,6 +82,7 @@ export class DictionaryViewProvider implements WebviewViewProvider {
           switch (command) {
             case "search":
                 this._callDictionaryApi(webviewView, word);
+                this._addToHistory(word);
                 break;
             }
         });
@@ -99,5 +103,9 @@ export class DictionaryViewProvider implements WebviewViewProvider {
             });
             return;
         });
+    }
+
+    private _addToHistory(word: string) {
+        commands.executeCommand("dictionary.addHistory", word);
     }
 }
