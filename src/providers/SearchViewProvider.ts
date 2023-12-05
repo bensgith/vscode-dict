@@ -1,19 +1,17 @@
 import { 
     CancellationToken, 
-    TreeItemCollapsibleState, 
     Uri, 
     Webview, 
     WebviewView, 
     WebviewViewProvider, 
     WebviewViewResolveContext,
-    commands,
-    window
+    commands
 } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
 import axios from "axios";
 
-export class DictionaryViewProvider implements WebviewViewProvider {
+export class SearchViewProvider implements WebviewViewProvider {
     public static readonly viewType = "dictionary.search";
 
     constructor(private readonly _extensionUri: Uri) {
