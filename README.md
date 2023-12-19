@@ -1,12 +1,12 @@
 # VS Code Dictionary
 
-An Englihs dictionary for developers to quickly search definition of English words.
+An English dictionary for developers to quickly search definition of English words.
 
 ## Features
 
 - Quick search for English words
 - English definitions and examples
-- Save search history
+- Save search history, clear search history
 
 ## Requirements
 
