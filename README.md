@@ -22,3 +22,13 @@ An English dictionary for developers to quickly search definition of English wor
 5. Navigate to `VS Code -> Activity Bar -> VS Dictionary`
 
 **Enjoy!**
+
+---
+
+## Support Me
+
+Buy me a cup of coffee :coffee: :smile:
+
+<p align="left">
+  <img src="resources/alipay-receive-qrcode.jpg" width="30%">
+</p>
